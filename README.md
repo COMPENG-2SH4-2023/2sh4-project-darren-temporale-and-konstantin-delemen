@@ -12,8 +12,8 @@ MacID: tempord
 StudentID: 400455464
 
 Developer 2:
-Section: [Insert your lab section]
+Section: L08
 
-MacID: [Insert your macID here]
+MacID: delemenk
 
-StudentID: [Insert your numerical student ID here]
+StudentID: 400453633
