@@ -1,53 +1,65 @@
 #include "GameMechs.h"
 
-GameMechs::GameMechs()
-{
+GameMechs::GameMechs(){
+    boardSizeX = 30;//default board sizes
+    boardSizeY = 15;
+
+    score = 0;
+
+    exitFlag = 0;
+    loseFlag = 0;
 
 }
 
-GameMechs::GameMechs(int boardX, int boardY)
-{
+GameMechs::GameMechs(int boardX, int boardY){
+    boardSizeX = boardX;//default board sizes
+    boardSizeY = boardY;
 
+    score = 0;
+
+    exitFlag = 0;
+    loseFlag = 0;
 }
 
 // do you need a destructor?
 
 
-
-bool GameMechs::getExitFlagStatus()
-{
+bool GameMechs::getExitFlagStatus(){
     return exitFlag;
 }
 
-char GameMechs::getInput()
-{
-    return input;
+bool GameMechs::getLoseFlagStatus(){
+    return loseFlag;
 }
 
-int GameMechs::getBoardSizeX()
-{
-    return boardSizeX;
-}
-
-int GameMechs::getBoardSizeY()
-{
-    return boardSizeY;
-}
-
-
-void GameMechs::setExitTrue()
-{
+void GameMechs::setExitTrue(){
     exitFlag = 1;
 }
 
-void GameMechs::setInput(char this_input)
-{
-
+char GameMechs::getInput(){
+    return input;
 }
 
-void GameMechs::clearInput()
-{
-
+void GameMechs::setInput(char this_input){
+    input = this_input;
 }
 
+void GameMechs::clearInput(){
+    input = '\0';
+}
 
+int GameMechs::getScore(){
+    return score;
+}
+
+void GameMechs::incrementScore(){
+    score++;
+}
+
+int GameMechs::getBoardSizeX(){
+    return boardSizeX;
+}
+
+int GameMechs::getBoardSizeY(){
+    return boardSizeY;
+}
