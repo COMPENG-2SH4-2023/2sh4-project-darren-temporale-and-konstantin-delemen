@@ -3,6 +3,9 @@
 #include "objPos.h"
 #include "GameMechs.h"
 
+#include "time.h"
+#include <stdlib.h>
+
 
 using namespace std;
 
@@ -25,7 +28,7 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(!gameMech->getExitFlagStatus())  
     {
         GetInput();
         RunLogic();
@@ -48,14 +51,16 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
+    srand(time(NULL));
+
     //exitFlag = false;
-    gameMech.setExitFlagTrue();
+    gameMech<-setExitFlagTrue();
 }
 
 void GetInput(void)
 {
    if(MacUILib_hasChar()){
-        gameMech.setInput(MacUILib_getChar());
+        gameMech<-setInput(MacUILib_getChar());
    }
 }
 

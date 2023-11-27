@@ -1,5 +1,7 @@
 #include "objPos.h"
 
+#include <stdlib.h>
+
 objPos::objPos()
 {
     x = 0;
@@ -62,27 +64,28 @@ char objPos::getSymbolIfPosEqual(const objPos* refPos)
 
 //========Food SubClass===========
 
-foodPos::foodPos():objPos(){
+foodPos::foodPos(){
     symbol = 'O';
-    //need to generate the initial position - need player pos and game board size
-    x = 5;
-    y = 5;
+    
+    objPos tempPlayer(30/2,15/2,'O');
+    this->generateFood(tempPlayer,30,15);//generating positions from the default game size
 }
 
-foodPos::foodPos(char s):objPos(){
+foodPos::foodPos(char s, objPos &blockOff, int xRange, int yRange){
     symbol = s;
-    //again need to generate the position
-    x = 5;
-    y = 5;
+    
+    this->generateFood(blockOff, xRange, yRange);
 }
 
+/*
 foodPos::foodPos(foodPos &o){
     x = o.x;
     y = o.y;
     symbol = o.symbol;
-}
+}*/
 
-void foodPos::generateFood(blockOff:objPos,xRange,yRange){
+void foodPos::generateFood(objPos blockOff, int xRange, int yRange){
+    int xtemp, ytemp, match;
     do{
             match = 1;
             xtemp = (rand() % (xRange));//This range is from 0 to range-1
@@ -97,12 +100,12 @@ void foodPos::generateFood(blockOff:objPos,xRange,yRange){
             }
         } while(!match);
 
-        //If we have broken out of the do while loop, the temp x and y values dont match anything else in use - so add them to the list
-        this.x = xtemp;
-        this.y = ytemp;
+        //If we have broken out of the do while loop, the temp x and y values dont conflict with anything - so we can use them
+        x = xtemp;
+        y = ytemp;
 }
 
-void foodPos::getFoodPos(returnPos:objPos&){
+void foodPos::getFoodPos(objPos &returnPos){
     returnPos.x = x;
     returnPos.y = y;
     returnPos.symbol = '\0';
