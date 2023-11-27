@@ -33,6 +33,8 @@ class GameMechs
         GameMechs();
         GameMechs(int boardX, int boardY);
 
+        GameMechs(GameMechs &o);
+
         //~GameMechs();
 
         bool getExitFlagStatus();

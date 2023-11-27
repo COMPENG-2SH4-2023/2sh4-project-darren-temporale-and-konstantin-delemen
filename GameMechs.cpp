@@ -12,13 +12,23 @@ GameMechs::GameMechs(){
 }
 
 GameMechs::GameMechs(int boardX, int boardY){
-    boardSizeX = boardX;//default board sizes
+    boardSizeX = boardX;
     boardSizeY = boardY;
 
     score = 0;
 
     exitFlag = 0;
     loseFlag = 0;
+}
+
+GameMechs::GameMechs(GameMechs &o){
+    boardSizeX = o.boardSizeX;
+    boardSizeY = o.boardSizeY;
+
+    score = o.score;
+
+    exitFlag = o.exitFlag;
+    loseFlag = o.loseFlag;
 }
 
 // do you need a destructor?

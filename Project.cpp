@@ -9,6 +9,7 @@ using namespace std;
 #define DELAY_CONST 100000
 
 GameMechs *gameMech; //I am open to better names for this
+foodPos *food; //I am open to better names for this
 
 void Initialize(void);
 void GetInput(void);
@@ -42,6 +43,7 @@ void Initialize(void)
     gameMech = new GameMechs();
     //this is using the default game size (30 by 15), specify in () if wawnt diff size
 
+    food = new foodPos(); //using the default symbol
 
     MacUILib_init();
     MacUILib_clearScreen();
@@ -68,7 +70,6 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
-
 }
 
 void LoopDelay(void)
@@ -81,7 +82,9 @@ void CleanUp(void)
 {
     MacUILib_clearScreen();   
 
-    delete gameMech; 
+    delete gameMech;
+
+    delete food; 
   
     MacUILib_uninit();
 }

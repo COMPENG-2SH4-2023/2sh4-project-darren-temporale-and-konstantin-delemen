@@ -22,4 +22,17 @@ class objPos
         char getSymbolIfPosEqual(const objPos* refPos);
 };
 
+class foodPos : public objPos{//Need to go over class inheratence again and see if this is right
+    public:
+
+        foodPos():objPos();//create a new food with the default symbol 'O'
+        foodPos(char s):objPos(); //create a new food with specified symbol
+        foodPos(foodPos &o);
+
+        //~foodPos();//there is nothing within foodPos on the heap
+
+        void getFoodPos(returnPos:objPos&);
+        void generateFood(blockOff:objPos,xRange,yRange);
+};
+
 #endif
