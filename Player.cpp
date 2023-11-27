@@ -7,47 +7,93 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-
 }
 
 
 Player::~Player()
 {
     // delete any heap members here
-    delete mainGameMechsRef;
 }
 
 void Player::getPlayerPos(objPos &returnPos)
 {
     // return the reference to the playerPos array list
-
 }
 
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic
-     switch (gameMech.getInput()) {
+    if (mainGameMechsRef.getInput() != 0) {
+        switch (mainGameMechsRef.getInput()) {
+            case ' ':
+                mainGameMechsRef.setExitTrue();
+                break;
             case 'w':
-                myDir = UP;
+                if(myDir != DOWN){
+                    myDir = UP;
+                }
                 break;
             case 's':
-                myDir = DOWN;
+                if(myDir != UP){
+                    myDir = DOWN;
+                }
                 break;
             case 'a':
-                myDir = LEFT;
+                if(myDir != RIGHT){
+                    myDir = LEFT;
+                }
                 break;
             case 'd':
-                myDir = RIGHT;
+                if(myDir != LEFT){
+                    myDir = RIGHT;
+                }
                 break;
             default:
-                myDir = STOP;
                 break;
         }
-    gameMech.clearInput();
+    mainGameMechsRef.clearInput();
+    }
 }
 
 void Player::movePlayer()
 {
-    // PPA3 Finite State Machine logic
+    switch (myDir) {
+            case STOP:
+                break;
+            case(UP):
+                mainGameMechsRef->getBoardSizeY--;
+                break;
+            case(LEFT):
+                mainGameMechsRef->getBoardSizeX--;
+                break;
+            case(DOWN):
+                mainGameMechsRef->getBoardSizeY++;
+                break;
+            case(RIGHT):
+                mainGameMechsRef->getBoardSizeX++;
+                break;
+            default:
+                break;
+    }
+    switch(mainGameMechsRef->getBoardSizeY) {
+        case(0):
+            mainGameMechsRef->getBoardSizeY = ySize-1;
+            break;
+        case(ySize):
+            mainGameMechsRef->getBoardSizeY = 1;
+            break;
+        default:
+            break;
+    }
+    switch(mainGameMechsRef->getBoardSizeX) {
+        case(0):
+            mainGameMechsRef->getBoardSizeX = xSize-1;
+            break;
+        case(xSize):
+            mainGameMechsRef->getBoardSizeX = 1;
+            break;
+        default:
+            break;
+    }
 }
 
