@@ -18,6 +18,7 @@ Player::~Player()
 void Player::getPlayerPos(objPos &returnPos)
 {
     // return the reference to the playerPos array list
+    playerPos.getHeadElement(returnPos);
 }
 
 void Player::updatePlayerDir()
