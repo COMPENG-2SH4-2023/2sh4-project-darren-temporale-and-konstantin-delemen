@@ -63,50 +63,50 @@ char objPos::getSymbolIfPosEqual(const objPos* refPos)
 
 
 //========Food SubClass===========
-
+ 
 foodPos::foodPos(){
-    symbol = 'O';
-    
+    symbol = 'O';//Default Symbol
+   
     objPos tempPlayer(30/2,15/2,'O');
-    this->generateFood(tempPlayer,30,15);//generating positions from the default game size
+    generateFood(tempPlayer,30,15);//generating positions from the default game size
 }
-
+ 
 foodPos::foodPos(char s, objPos &blockOff, int xRange, int yRange){
     symbol = s;
-    
-    this->generateFood(blockOff, xRange, yRange);
+   
+    generateFood(blockOff, xRange, yRange);
 }
-
+ 
 /*
 foodPos::foodPos(foodPos &o){
     x = o.x;
     y = o.y;
     symbol = o.symbol;
 }*/
-
+ 
 void foodPos::generateFood(objPos blockOff, int xRange, int yRange){
     int xtemp, ytemp, match;
     do{
             match = 1;
             xtemp = (rand() % (xRange));//This range is from 0 to range-1
             ytemp = (rand() % (yRange));
-
+ 
             if(xtemp == 0 || ytemp == 0){
                 match = 0;
             }
-
+ 
             if(xtemp == blockOff.x && ytemp == blockOff.y){ //If the randomly generated x and y valuse match the player, repete the do while loop
                 match = 0;
             }
         } while(!match);
-
+ 
         //If we have broken out of the do while loop, the temp x and y values dont conflict with anything - so we can use them
         x = xtemp;
         y = ytemp;
 }
-
+ 
 void foodPos::getFoodPos(objPos &returnPos){
     returnPos.x = x;
     returnPos.y = y;
-    returnPos.symbol = '\0';
+    returnPos.symbol = symbol;
 }

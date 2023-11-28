@@ -8,7 +8,8 @@ Player::Player(GameMechs* thisGMRef)
 
     // more actions to be included
     playerPosList = new objPosArrayList();
-    //playerPosList->insertHead(objPos(0, 0, '@'));
+    objPos temp(mainGameMechsRef->getBoardSizeX() / 2, mainGameMechsRef->getBoardSizeY() / 2, '*'); // create a temporary objPos object
+    playerPosList->insertHead(temp);
 
 
 }
@@ -34,30 +35,33 @@ void Player::getPlayerPosList(objPosArrayList* &returnList)
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic
-        switch (mainGameMechsRef->getInput()) {
-            case 'w':
-                if(myDir != DOWN){
-                    myDir = UP;
-                }
-                break;
-            case 's':
-                if(myDir != UP){
-                    myDir = DOWN;
-                }
-                break;
-            case 'a':
-                if(myDir != RIGHT){
-                    myDir = LEFT;
-                }
-                break;
-            case 'd':
-                if(myDir != LEFT){
-                    myDir = RIGHT;
-                }
-                break;
-            default:
-                break;
-        }
+    switch (mainGameMechsRef->getInput()) {
+        case ' ':
+            mainGameMechsRef->setExitTrue();
+            break;
+        case 'w':
+            if(myDir != DOWN){
+                myDir = UP;
+            }
+            break;
+        case 's':
+            if(myDir != UP){
+                myDir = DOWN;
+            }
+            break;
+        case 'a':
+            if(myDir != RIGHT){
+                myDir = LEFT;
+            }
+            break;
+        case 'd':
+            if(myDir != LEFT){
+                myDir = RIGHT;
+            }
+            break;
+        default:
+            break;
+    }
     mainGameMechsRef->clearInput();
 }
 
@@ -85,30 +89,35 @@ void Player::movePlayer()
             break;
     }
 
-    //playerPosList->insertHead(objPos(X, Y, '@'));
+    int ySize = mainGameMechsRef->getBoardSizeY();
+    int xSize = mainGameMechsRef->getBoardSizeX();
+    
+    if (Y == 0) {
+        Y = ySize - 1;
+    }
+    else if (Y == ySize) {
+    Y = 1;
+    }
+    if (X == 0) {
+        X = xSize - 1;
+    }
+    else if (X == xSize) {
+        X = 1;
+    }
+
+    objPos updatedHead(X,Y,'*');
+    playerPosList->insertHead(updatedHead);
 
     playerPosList->removeTail();
-    /*
-    switch(mainGameMechsRef->getBoardSizeY) {
-        case(0):
-            mainGameMechsRef->getBoardSizeY = ySize-1;
-            break;
-        case(ySize):
-            mainGameMechsRef->getBoardSizeY = 1;
-            break;
-        default:
-            break;
-    }
-    switch(mainGameMechsRef->getBoardSizeX) {
-        case(0):
-            mainGameMechsRef->getBoardSizeX = xSize-1;
-            break;
-        case(xSize):
-            mainGameMechsRef->getBoardSizeX = 1;
-            break;
-        default:
-            break;
-    }
-    */
+}
+
+void Player::growSnake()
+{
+    objPos tail;
+    playerPosList->getTailElement(tail);
+
+    objPos newTail(tail.x, tail.y, '0');
+
+    playerPosList->insertTail(newTail);
 }
 

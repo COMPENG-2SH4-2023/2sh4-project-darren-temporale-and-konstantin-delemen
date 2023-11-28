@@ -2,32 +2,34 @@
 #include "MacUILib.h"
 #include "objPos.h"
 #include "GameMechs.h"
-
+#include "Player.h"
+ 
 #include "time.h"
 #include <stdlib.h>
-
-
+ 
+ 
 using namespace std;
-
+ 
 #define DELAY_CONST 100000
-
+ 
 GameMechs *gameMech; //I am open to better names for this
 foodPos *food; //I am open to better names for this
-
+Player *player;
+ 
 void Initialize(void);
 void GetInput(void);
 void RunLogic(void);
 void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
-
-
-
+ 
+ 
+ 
 int main(void)
 {
-
+ 
     Initialize();
-
+ 
     while(!gameMech->getExitFlagStatus())  
     {
         GetInput();
@@ -35,58 +37,106 @@ int main(void)
         DrawScreen();
         LoopDelay();
     }
-
+ 
     CleanUp();
-
+ 
 }
-
-
+ 
+ 
 void Initialize(void)
 {
     gameMech = new GameMechs();
     //this is using the default game size (30 by 15), specify in () if wawnt diff size
-
-    food = new foodPos(); //using the default symbol
-
-    MacUILib_init();
-    MacUILib_clearScreen();
-
+ 
+    player = new Player(gameMech);
+ 
     srand(time(NULL));
+ 
+    objPos tempPlayerPos(0,0,'s');
+    player->getPlayerPos(tempPlayerPos);//This all gets the elements that the food has to avoid
+    int x = gameMech->getBoardSizeX();
+    int y = gameMech->getBoardSizeY();
+    food = new foodPos('O', tempPlayerPos, x, y); //using the default symbol
+ 
+    MacUILib_init();
+    //MacUILib_clearScreen();
 }
-
+ 
 void GetInput(void)
 {
    if(MacUILib_hasChar()){
         gameMech->setInput(MacUILib_getChar());
    }
 }
-
+ 
 void RunLogic(void)
 {
+    player->updatePlayerDir();
+    player->movePlayer();
     
+    objPos snakeHead;
+    player->getPlayerPos(snakeHead);
+    objPos foodPos;
+    food->getFoodPos(foodPos);
 
+    if(snakeHead.isPosEqual(&foodPos))
+    {
+        gameMech->incrementScore();
 
-    gameMech->incrementScore();
+        food->generateFood(snakeHead, gameMech->getBoardSizeX(), gameMech->getBoardSizeY());
+
+        player->growSnake();
+    }
 }
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();
+    //MacUILib_printf("%c\n", gameMech->getInput());
+    int i, j, k;
+    objPos tempFood;
+    food->getFoodPos(tempFood);
+    objPos tempPlayer;
+    player->getPlayerPos(tempPlayer);
+    for(i = 0; i <= gameMech->getBoardSizeY(); i++){
+        for(j = 0; j <= gameMech->getBoardSizeX(); j++){
+            if(i == 0 || i == gameMech->getBoardSizeY() || j == 0 || j == gameMech->getBoardSizeX()){
+                if(i == 0 || i == gameMech->getBoardSizeY()){
+                    MacUILib_printf("%c", '-');
+                }
+                else{
+                    MacUILib_printf("%c", '|');
+                }
+            }
+            else if(i == tempPlayer.y && j == tempPlayer.x){
+                MacUILib_printf("%c", tempPlayer.symbol);
+            }
+            else if(i == tempFood.y && j == tempFood.x){
+                    MacUILib_printf("%c", tempFood.symbol);
+            }
+            else{
+                MacUILib_printf(" ");
+            }
+        }
+        MacUILib_printf("\n");
+    }
 }
 
 void LoopDelay(void)
 {
     MacUILib_Delay(DELAY_CONST); // 0.1s delay
 }
-
-
+ 
+ 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();   
-
+    MacUILib_clearScreen();  
+ 
     delete gameMech;
-
-    delete food; 
-  
+ 
+    delete food;
+ 
+    delete player;
+ 
     MacUILib_uninit();
 }
