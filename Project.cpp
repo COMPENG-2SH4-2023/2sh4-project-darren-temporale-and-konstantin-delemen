@@ -52,15 +52,12 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     srand(time(NULL));
-
-    //exitFlag = false;
-    gameMech<-setExitFlagTrue();
 }
 
 void GetInput(void)
 {
    if(MacUILib_hasChar()){
-        gameMech<-setInput(MacUILib_getChar());
+        gameMech->setInput(MacUILib_getChar());
    }
 }
 
@@ -69,7 +66,7 @@ void RunLogic(void)
     
 
 
-    gameMech.incrementScore();
+    gameMech->incrementScore();
 }
 
 void DrawScreen(void)

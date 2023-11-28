@@ -7,28 +7,34 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-}
+    playerPosList = new objPosArrayList();
+    //playerPosList->insertHead(objPos(0, 0, '@'));
 
+
+}
 
 Player::~Player()
 {
     // delete any heap members here
+    delete mainGameMechsRef;
+    delete playerPosList;
 }
 
 void Player::getPlayerPos(objPos &returnPos)
 {
     // return the reference to the playerPos array list
-    playerPos.getHeadElement(returnPos);
+    playerPosList->getHeadElement(returnPos);
+}
+
+void Player::getPlayerPosList(objPosArrayList* &returnList)
+{
+    returnList = playerPosList;
 }
 
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic
-    if (mainGameMechsRef.getInput() != 0) {
-        switch (mainGameMechsRef.getInput()) {
-            case ' ':
-                mainGameMechsRef.setExitTrue();
-                break;
+        switch (mainGameMechsRef->getInput()) {
             case 'w':
                 if(myDir != DOWN){
                     myDir = UP;
@@ -52,30 +58,37 @@ void Player::updatePlayerDir()
             default:
                 break;
         }
-    mainGameMechsRef.clearInput();
-    }
+    mainGameMechsRef->clearInput();
 }
 
 void Player::movePlayer()
 {
+    objPos head;
+    getPlayerPos(head);
+
+    int X = head.x;
+    int Y = head.y;
     switch (myDir) {
-            case STOP:
-                break;
-            case(UP):
-                mainGameMechsRef->getBoardSizeY--;
-                break;
-            case(LEFT):
-                mainGameMechsRef->getBoardSizeX--;
-                break;
-            case(DOWN):
-                mainGameMechsRef->getBoardSizeY++;
-                break;
-            case(RIGHT):
-                mainGameMechsRef->getBoardSizeX++;
-                break;
-            default:
-                break;
+            case UP:
+            Y--;
+            break;
+        case DOWN:
+            Y++;
+            break;
+        case LEFT:
+            X--;
+            break;
+        case RIGHT:
+            X++;
+            break;
+        case STOP:
+            break;
     }
+
+    //playerPosList->insertHead(objPos(X, Y, '@'));
+
+    playerPosList->removeTail();
+    /*
     switch(mainGameMechsRef->getBoardSizeY) {
         case(0):
             mainGameMechsRef->getBoardSizeY = ySize-1;
@@ -96,5 +109,6 @@ void Player::movePlayer()
         default:
             break;
     }
+    */
 }
 
