@@ -92,15 +92,17 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
-    //MacUILib_printf("%c\n", gameMech->getInput());
-    int i, j, k;
+    int i, j, k, objPrinted = 0;
     objPos tempFood;
     food->getFoodPos(tempFood);
-    objPos tempPlayer;
-    player->getPlayerPos(tempPlayer);
+    objPosArrayList *snakeBody = new objPosArrayList();
+    player->getPlayerPosList(snakeBody);
+    objPos tempSnakeEle;
+ 
     for(i = 0; i <= gameMech->getBoardSizeY(); i++){
         for(j = 0; j <= gameMech->getBoardSizeX(); j++){
             if(i == 0 || i == gameMech->getBoardSizeY() || j == 0 || j == gameMech->getBoardSizeX()){
+                //If we are currently at the boarders, print those symbols
                 if(i == 0 || i == gameMech->getBoardSizeY()){
                     MacUILib_printf("%c", '-');
                 }
@@ -108,14 +110,22 @@ void DrawScreen(void)
                     MacUILib_printf("%c", '|');
                 }
             }
-            else if(i == tempPlayer.y && j == tempPlayer.x){
-                MacUILib_printf("%c", tempPlayer.symbol);
-            }
             else if(i == tempFood.y && j == tempFood.x){
+                //If we are at the location of the food, print the food
                     MacUILib_printf("%c", tempFood.symbol);
             }
-            else{
-                MacUILib_printf(" ");
+            else {
+                objPrinted = 0;
+                for(int k=0;k<(snakeBody->getSize());k++){
+                    snakeBody->getElement(tempSnakeEle, k);
+                    if(i == tempSnakeEle.y && j == tempSnakeEle.x){
+                        objPrinted = 1;
+                        MacUILib_printf("%c", tempSnakeEle.symbol);
+                    }
+                }
+                if(objPrinted==0){
+                    MacUILib_printf(" ");
+                }
             }
         }
         MacUILib_printf("\n");
@@ -126,7 +136,7 @@ void LoopDelay(void)
 {
     MacUILib_Delay(DELAY_CONST); // 0.1s delay
 }
- 
+
  
 void CleanUp(void)
 {

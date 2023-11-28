@@ -73,28 +73,3 @@ int GameMechs::getBoardSizeX(){
 int GameMechs::getBoardSizeY(){
     return boardSizeY;
 }
-/*
-bool GameMechs::detectCollFood(objPos playerPos, objPos foodPos){
-    if(playerPos.y == foodPos.y && playerPos.x == foodPos.x){
-        return 1;
-    }
-    else{
-        return 0;
-    }
-}
- 
-bool GameMechs::detectCollBody(objPosArrayList snake){
-    objPos sHead(0,0,'x');
-    sHead.setObjPos(snake.aList[0]);
- 
-    objPos sBody(0,0,'x');
- 
-    for(int i=1;i<snake.sizeList;i++){
-        sBody.setObjPos(snake.aList[i]);
-        if(sHead.y == sBody.y && sHead.x = sBody.x){
-            return 1;
-        }
-    }
-    return 0;
-}
-*/
