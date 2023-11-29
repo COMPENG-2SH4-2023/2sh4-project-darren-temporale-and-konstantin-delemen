@@ -76,13 +76,7 @@ foodPos::foodPos(char s, objPos &blockOff, int xRange, int yRange){
    
     generateFood(blockOff, xRange, yRange);
 }
- 
-/*
-foodPos::foodPos(foodPos &o){
-    x = o.x;
-    y = o.y;
-    symbol = o.symbol;
-}*/
+
  
 void foodPos::generateFood(objPos blockOff, int xRange, int yRange){
     int xtemp, ytemp, match;

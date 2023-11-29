@@ -52,8 +52,7 @@ class GameMechs
         int getBoardSizeY();
 
         bool detectCollFood(objPos playerPos, objPos foodPos);//return true if collision
-        bool detectCollBody(objPosArrayList snake);//return true if collision
-      
+       
 
 };
 
