@@ -3,6 +3,7 @@
 #include "objPos.h"
 #include "GameMechs.h"
 #include "Player.h"
+#include "Food.h"
  
 #include "time.h"
 #include <stdlib.h>
@@ -13,7 +14,7 @@ using namespace std;
 #define DELAY_CONST 100000
  
 GameMechs *gameMech; //I am open to better names for this
-foodPos *food; //I am open to better names for this
+Food *food; //I am open to better names for this
 Player *player;
  
 void Initialize(void);
@@ -56,7 +57,7 @@ void Initialize(void)
     player->getPlayerPos(tempPlayerPos);//This all gets the elements that the food has to avoid
     int x = gameMech->getBoardSizeX();
     int y = gameMech->getBoardSizeY();
-    food = new foodPos('O', tempPlayerPos, x, y); //using the default symbol
+    food = new Food('O', tempPlayerPos, x, y); //using the default symbol  O
  
     MacUILib_init();
     //MacUILib_clearScreen();
@@ -76,14 +77,14 @@ void RunLogic(void)
     
     objPos snakeHead;
     player->getPlayerPos(snakeHead);
-    objPos foodPos;
-    food->getFoodPos(foodPos);
+    objPos foodLoc;
+    food->getFoodPos(foodLoc);
 
-    if(snakeHead.isPosEqual(&foodPos))
+    if(snakeHead.isPosEqual(&foodLoc))
     {
         gameMech->incrementScore();
 
-        food->generateFood(snakeHead, gameMech->getBoardSizeX(), gameMech->getBoardSizeY());
+        food->generateFood(food->foodPos,snakeHead, gameMech->getBoardSizeX(), gameMech->getBoardSizeY());
 
         player->growSnake();
     }
@@ -92,44 +93,16 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
-    int i, j, k, objPrinted = 0;
+    
     objPos tempFood;
     food->getFoodPos(tempFood);
     objPosArrayList *snakeBody = new objPosArrayList();
     player->getPlayerPosList(snakeBody);
-    objPos tempSnakeEle;
+
+    objPos tempPlayerPos;
+    player->getPlayerPos(tempPlayerPos);
  
-    for(i = 0; i <= gameMech->getBoardSizeY(); i++){
-        for(j = 0; j <= gameMech->getBoardSizeX(); j++){
-            if(i == 0 || i == gameMech->getBoardSizeY() || j == 0 || j == gameMech->getBoardSizeX()){
-                //If we are currently at the boarders, print those symbols
-                if(i == 0 || i == gameMech->getBoardSizeY()){
-                    MacUILib_printf("%c", '-');
-                }
-                else{
-                    MacUILib_printf("%c", '|');
-                }
-            }
-            else if(i == tempFood.y && j == tempFood.x){
-                //If we are at the location of the food, print the food
-                    MacUILib_printf("%c", tempFood.symbol);
-            }
-            else {
-                objPrinted = 0;
-                for(int k=0;k<(snakeBody->getSize());k++){
-                    snakeBody->getElement(tempSnakeEle, k);
-                    if(i == tempSnakeEle.y && j == tempSnakeEle.x){
-                        objPrinted = 1;
-                        MacUILib_printf("%c", tempSnakeEle.symbol);
-                    }
-                }
-                if(objPrinted==0){
-                    MacUILib_printf(" ");
-                }
-            }
-        }
-        MacUILib_printf("\n");
-    }
+    gameMech->printBoard(tempPlayerPos,snakeBody, tempFood);
 }
 
 void LoopDelay(void)
@@ -142,11 +115,11 @@ void CleanUp(void)
 {
     MacUILib_clearScreen();  
  
-    delete gameMech;
- 
     delete food;
  
     delete player;
+
+    delete gameMech;
  
     MacUILib_uninit();
 }

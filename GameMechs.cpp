@@ -1,4 +1,5 @@
 #include "GameMechs.h"
+#include "MacUILib.h"
 
 GameMechs::GameMechs(){
     boardSizeX = 30;//default board sizes
@@ -72,4 +73,40 @@ int GameMechs::getBoardSizeX(){
 
 int GameMechs::getBoardSizeY(){
     return boardSizeY;
+}
+
+void GameMechs::printBoard(objPos &playerLoc, objPosArrayList *snakeLoc, objPos foodLoc){
+    int i, j, k, objPrinted = 0;
+    objPos tempSnakeEle;
+    for(i = 0; i <= getBoardSizeY(); i++){
+        for(j = 0; j <= getBoardSizeX(); j++){
+            if(i == 0 || i == getBoardSizeY() || j == 0 || j == getBoardSizeX()){
+                //If we are currently at the boarders, print those symbols
+                if(i == 0 || i == getBoardSizeY()){
+                    MacUILib_printf("%c", '-');
+                }
+                else{
+                    MacUILib_printf("%c", '|');
+                }
+            }
+            else if(i == foodLoc.y && j == foodLoc.x){
+                //If we are at the location of the food, print the food
+                MacUILib_printf("%c", foodLoc.symbol);
+            }
+            else {
+                objPrinted = 0;
+                for(int k=0;k<(snakeLoc->getSize());k++){
+                    snakeLoc->getElement(tempSnakeEle, k);
+                    if(i == tempSnakeEle.y && j == tempSnakeEle.x){
+                        objPrinted = 1;
+                        MacUILib_printf("%c", tempSnakeEle.symbol);
+                    }
+                }
+                if(objPrinted==0){
+                    MacUILib_printf(" ");
+                }
+            }
+        }
+        MacUILib_printf("\n");
+    }
 }
