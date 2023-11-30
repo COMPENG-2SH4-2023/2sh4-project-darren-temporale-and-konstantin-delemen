@@ -64,9 +64,9 @@ void Initialize(void)
  
 void GetInput(void)
 {
-   if(MacUILib_hasChar()){
+    if(MacUILib_hasChar()){
         gameMech->setInput(MacUILib_getChar());
-   }
+    }
 }
  
 void RunLogic(void)

@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 
+int indexListList = 0;
+
 objPos::objPos()
 {
     x = 0;
@@ -76,7 +78,6 @@ foodPos::foodPos(char s, objPos &blockOff, int xRange, int yRange){
    
     generateFood(blockOff, xRange, yRange);
 }
-
  
 void foodPos::generateFood(objPos blockOff, int xRange, int yRange){
     int xtemp, ytemp, match;
@@ -84,7 +85,7 @@ void foodPos::generateFood(objPos blockOff, int xRange, int yRange){
             match = 1;
             xtemp = (rand() % (xRange));//This range is from 0 to range-1
             ytemp = (rand() % (yRange));
- 
+
             if(xtemp == 0 || ytemp == 0){
                 match = 0;
             }
@@ -102,5 +103,5 @@ void foodPos::generateFood(objPos blockOff, int xRange, int yRange){
 void foodPos::getFoodPos(objPos &returnPos){
     returnPos.x = x;
     returnPos.y = y;
-    returnPos.symbol = symbol;
+    returnPos.symbol = symbol;    
 }

@@ -27,6 +27,8 @@ class foodPos : public objPos{
 
         foodPos();//new food with the default symbol 'O' and position using default game size
         foodPos(char s, objPos &blockOff, int xRange, int yRange); //new food with specified symbol, playerPos, and game board size
+        
+        //foodPos(foodPos &o);//I think the copy function is inherited
 
         //~foodPos();//there is nothing within foodPos on the heap
 

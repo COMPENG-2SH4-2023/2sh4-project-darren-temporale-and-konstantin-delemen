@@ -116,7 +116,7 @@ void Player::growSnake()
     objPos tail;
     playerPosList->getTailElement(tail);
 
-    objPos newTail(tail.x, tail.y, '0');
+    objPos newTail(tail.x, tail.y, '*');
 
     playerPosList->insertTail(newTail);
 }
