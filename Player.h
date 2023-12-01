@@ -20,6 +20,8 @@ class Player
         Player(GameMechs* thisGMRef);
         ~Player();
 
+        Player(Player &o);
+
         void getPlayerPosList(objPosArrayList* &returnList);
         void getPlayerPos(objPos &returnPos); // Upgrade this in iteration 3.
         void updatePlayerDir();

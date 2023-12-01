@@ -20,6 +20,12 @@ Player::~Player()
     delete playerPosList;
 }
 
+Player::Player(Player &o){
+    mainGameMechsRef = o.mainGameMechsRef;
+    myDir = o.myDir;
+    playerPosList = o.playerPosList;
+}
+
 void Player::getPlayerPos(objPos &returnPos)
 {
     // return the reference to the playerPos array list
@@ -109,7 +115,8 @@ void Player::movePlayer(Food *foodObj)
     objPos foodLoc;
     foodObj->getFoodPos(foodLoc);
 
-    objPosArrayList *snakeBody = new objPosArrayList();
+    objPosArrayList *snakeBody;
+    *snakeBody = objPosArrayList();
     getPlayerPosList(snakeBody);
 
     if(updatedHead.isPosEqual(&foodLoc))//checking for a collision with food

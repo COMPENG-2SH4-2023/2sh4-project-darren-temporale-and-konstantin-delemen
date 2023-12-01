@@ -80,3 +80,12 @@ bool objPosArrayList::suicideCheck(){
 
     return 0;
 }
+
+objPosArrayList::objPosArrayList(objPosArrayList &o){
+    sizeList = o.sizeList;
+    sizeArray = o.sizeArray;
+
+    for(int i=0; i<sizeList; i++){
+        aList[i] = o.aList[i];
+    }
+}
