@@ -4,6 +4,7 @@
 #include "GameMechs.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "Food.h"
 
 class Player
 {
@@ -22,7 +23,7 @@ class Player
         void getPlayerPosList(objPosArrayList* &returnList);
         void getPlayerPos(objPos &returnPos); // Upgrade this in iteration 3.
         void updatePlayerDir();
-        void movePlayer();
+        void movePlayer(Food *foodObj);
         void growSnake();
 
     private:

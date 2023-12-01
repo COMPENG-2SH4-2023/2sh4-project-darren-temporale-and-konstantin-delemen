@@ -73,28 +73,28 @@ void GetInput(void)
 void RunLogic(void)
 {
     player->updatePlayerDir();
-    player->movePlayer();
+    player->movePlayer(food);
     
-    objPos snakeHead;
-    player->getPlayerPos(snakeHead);
-    objPos foodLoc;
-    food->getFoodPos(foodLoc);
+    // objPos snakeHead;
+    // player->getPlayerPos(snakeHead);
+    // objPos foodLoc;
+    // food->getFoodPos(foodLoc);
 
-    objPosArrayList *snakeBody = new objPosArrayList();
-    player->getPlayerPosList(snakeBody);
+    // objPosArrayList *snakeBody = new objPosArrayList();
+    // player->getPlayerPosList(snakeBody);
 
-    if(snakeHead.isPosEqual(&foodLoc))//checking for a collision with food
-    {
-        gameMech->incrementScore();
+    // if(snakeHead.isPosEqual(&foodLoc))//checking for a collision with food
+    // {
+    //     gameMech->incrementScore();
 
-        food->generateFood(food->foodPos, snakeBody, gameMech->getBoardSizeX(), gameMech->getBoardSizeY());
+    //     food->generateFood(food->foodPos, snakeBody, gameMech->getBoardSizeX(), gameMech->getBoardSizeY());
 
-        player->growSnake();
-    }
+    //     player->growSnake();
+    // }
 
-    if(snakeBody->suicideCheck()){
-        gameMech->setLoseTrue();
-    }
+    // if(snakeBody->suicideCheck()){
+    //     gameMech->setLoseTrue();
+    // }
 }
 
 void DrawScreen(void)

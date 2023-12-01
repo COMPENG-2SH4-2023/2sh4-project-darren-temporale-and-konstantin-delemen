@@ -65,7 +65,7 @@ void Player::updatePlayerDir()
     mainGameMechsRef->clearInput();
 }
 
-void Player::movePlayer()
+void Player::movePlayer(Food *foodObj)
 {
     objPos head;
     getPlayerPos(head);
@@ -106,9 +106,31 @@ void Player::movePlayer()
     }
 
     objPos updatedHead(X,Y,'*');
-    playerPosList->insertHead(updatedHead);
+    
+    objPos foodLoc;
+    foodObj->getFoodPos(foodLoc);
 
-    playerPosList->removeTail();
+    objPosArrayList *snakeBody = new objPosArrayList();
+    getPlayerPosList(snakeBody);
+
+    if(updatedHead.isPosEqual(&foodLoc))//checking for a collision with food
+    {
+        mainGameMechsRef->incrementScore();
+
+        foodObj->generateFood(foodObj->foodPos, snakeBody, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+
+        playerPosList->insertHead(updatedHead);
+    }
+    else{
+        playerPosList->insertHead(updatedHead);
+        playerPosList->removeTail();
+    }
+    
+
+    if(snakeBody->suicideCheck()){
+        mainGameMechsRef->setLoseTrue();
+        mainGameMechsRef->setExitTrue();
+    }
 }
 
 void Player::growSnake()
