@@ -63,3 +63,20 @@ void objPosArrayList::getElement(objPos &returnPos, int index) {
     returnPos.y = aList[index].y; // copy the y coordinate of the element at the given index to the returnPos object
     returnPos.symbol = aList[index].symbol; // copy the symbol of the element at the given index to the returnPos object
 }
+
+
+bool objPosArrayList::suicideCheck(){
+    objPos headLoc;
+
+    getHeadElement(headLoc);
+
+    //Compare the location of the snake head to the location of each body part, if theu are the same there has been a collision
+
+    for(int i=1; i<sizeList;i++){
+        if(aList[i].x == headLoc.x && aList[i].y == headLoc.y){ //If the randomly generated x and y valuse match the player, repete the do while loop
+            return 1;
+        }
+    }
+
+    return 0;
+}

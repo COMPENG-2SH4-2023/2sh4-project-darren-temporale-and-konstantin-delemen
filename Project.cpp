@@ -80,13 +80,20 @@ void RunLogic(void)
     objPos foodLoc;
     food->getFoodPos(foodLoc);
 
-    if(snakeHead.isPosEqual(&foodLoc))
+    objPosArrayList *snakeBody = new objPosArrayList();
+    player->getPlayerPosList(snakeBody);
+
+    if(snakeHead.isPosEqual(&foodLoc))//checking for a collision with food
     {
         gameMech->incrementScore();
 
-        food->generateFood(food->foodPos,snakeHead, gameMech->getBoardSizeX(), gameMech->getBoardSizeY());
+        food->generateFood(food->foodPos, snakeBody, gameMech->getBoardSizeX(), gameMech->getBoardSizeY());
 
         player->growSnake();
+    }
+
+    if(snakeBody->suicideCheck()){
+        gameMech->setLoseTrue();
     }
 }
 
@@ -102,7 +109,18 @@ void DrawScreen(void)
     objPos tempPlayerPos;
     player->getPlayerPos(tempPlayerPos);
  
-    gameMech->printBoard(tempPlayerPos,snakeBody, tempFood);
+    if(!gameMech->getLoseFlagStatus()){
+        //If the lose flag is false, print the gameboard
+        gameMech->printBoard(tempPlayerPos,snakeBody, tempFood);
+        MacUILib_printf("Press W A S D To Move, Eat The Food To Grow\n");
+        MacUILib_printf("Score: %d", gameMech->getScore());
+        //Is there other things that should be printed out here?
+    }
+    else{
+        MacUILib_printf("\n   You Died!\n\n   Game Over\n\n");
+        MacUILib_printf("   Score: %d\n", gameMech->getScore());
+        gameMech->setExitTrue();
+    }
 }
 
 void LoopDelay(void)
@@ -113,7 +131,7 @@ void LoopDelay(void)
  
 void CleanUp(void)
 {
-    MacUILib_clearScreen();  
+    //MacUILib_clearScreen();  
  
     delete food;
  

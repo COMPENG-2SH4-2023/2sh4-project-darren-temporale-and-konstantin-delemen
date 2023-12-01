@@ -47,6 +47,10 @@ void GameMechs::setExitTrue(){
     exitFlag = 1;
 }
 
+void GameMechs::setLoseTrue(){
+    loseFlag = 1;
+}
+
 char GameMechs::getInput(){
     return input;
 }

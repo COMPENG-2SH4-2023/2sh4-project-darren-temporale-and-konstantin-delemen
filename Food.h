@@ -2,6 +2,7 @@
 #define FOOD_H
 
 #include "objPos.h"
+#include "objPosArrayList.h"
 
 class Food{
     public:
@@ -15,7 +16,12 @@ class Food{
         //~foodPos();//there is nothing within foodPos on the heap
 
         void getFoodPos(objPos &returnPos);
-        void generateFood(objPos &returnPos, objPos blockOff, int xRange, int yRange);
+
+        //to be used before the snake body grows (only snake head in objPos)
+        void generateInitialFood(objPos &returnPos, objPos &blockOff, int xRange, int yRange);
+        
+        //generating food while avoiding the whole snake body
+        void generateFood(objPos &returnPos, objPosArrayList* blockOff, int xRange, int yRange);
 };
 
 #endif

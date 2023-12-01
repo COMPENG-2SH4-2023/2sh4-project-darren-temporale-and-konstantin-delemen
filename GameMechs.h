@@ -13,11 +13,8 @@ using namespace std;
 class GameMechs
 {
     // Construct the remaining declaration from the project manual.
-
     // Only some sample members are included here
-
     // You will include more data members and member functions to complete your design.
-
     private:
         char input;
         bool exitFlag;
@@ -35,11 +32,12 @@ class GameMechs
 
         GameMechs(GameMechs &o);
 
-        //~GameMechs();
+        //~GameMechs();//There are no heap members
 
         bool getExitFlagStatus();
         bool getLoseFlagStatus();
         void setExitTrue();
+        void setLoseTrue();
 
         char getInput();
         void setInput(char this_input);
