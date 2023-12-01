@@ -68,7 +68,7 @@ void Player::updatePlayerDir()
     mainGameMechsRef->clearInput();
 }
 
-void Player::movePlayer(Food *foodObj)
+void Player::movePlayer(Food *foodObj) // a method that moves the player according to the direction and checks for collisions with food or itself
 {
     objPos head; // declare a variable to store the head position 
     getPlayerPos(head); // get the head position from the list
@@ -113,7 +113,7 @@ void Player::movePlayer(Food *foodObj)
     objPos foodLoc; // declare a variable to store the food position
     foodObj->getFoodPos(foodLoc); // get the food position from the food object
 
-    objPosArrayList *snakeBody; // declare a pointer to store the snake body list
+    objPosArrayList *snakeBody = new objPosArrayList(); // declare a pointer to store the snake body list
     *snakeBody = objPosArrayList(); // initialize the pointer to a new list
     getPlayerPosList(snakeBody); // get the snake body list from the player object
 
