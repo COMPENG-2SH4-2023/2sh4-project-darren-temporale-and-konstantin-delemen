@@ -32,7 +32,7 @@ void Player::getPlayerPos(objPos &returnPos)
 
 void Player::getPlayerPosList(objPosArrayList* &returnList)
 {
-    returnList = playerPosList;
+    returnList = playerPosList; 
 }
 
 void Player::updatePlayerDir()
@@ -42,22 +42,22 @@ void Player::updatePlayerDir()
         case ' ':
             mainGameMechsRef->setExitTrue();
             break;
-        case 'w':
+        case 'w': //if the input is up and the player is not currently going down, set direction to up
             if(myDir != DOWN){
                 myDir = UP;
             }
             break;
-        case 's':
+        case 's': //if the input is down and the player is not currently going up, set direction to down
             if(myDir != UP){
                 myDir = DOWN;
             }
             break;
-        case 'a':
+        case 'a': //if the input is left and the player is not currently going right, set direction to left
             if(myDir != RIGHT){
                 myDir = LEFT;
             }
             break;
-        case 'd':
+        case 'd': //if the input is right and the player is not currently going left, set direction to right
             if(myDir != LEFT){
                 myDir = RIGHT;
             }
