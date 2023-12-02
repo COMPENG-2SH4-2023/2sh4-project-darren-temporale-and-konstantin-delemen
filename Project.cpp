@@ -110,7 +110,7 @@ void LoopDelay(void)
  
 void CleanUp(void)
 {
-    //MacUILib_clearScreen();  
+    //MacUILib_clearScreen(); //Do we need this to still be here?
  
     delete food;
  
