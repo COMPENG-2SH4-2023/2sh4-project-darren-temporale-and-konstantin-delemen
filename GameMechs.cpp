@@ -1,7 +1,7 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
 
-GameMechs::GameMechs(){
+GameMechs::GameMechs() {
     boardSizeX = 30; //default board sizes
     boardSizeY = 15;
 
@@ -12,7 +12,7 @@ GameMechs::GameMechs(){
 
 }
 
-GameMechs::GameMechs(int boardX, int boardY){
+GameMechs::GameMechs(int boardX, int boardY) {
     boardSizeX = boardX;
     boardSizeY = boardY;
 
@@ -22,7 +22,7 @@ GameMechs::GameMechs(int boardX, int boardY){
     loseFlag = 0;
 }
 
-GameMechs::GameMechs(GameMechs &o){
+GameMechs::GameMechs(GameMechs &o) {
     boardSizeX = o.boardSizeX;
     boardSizeY = o.boardSizeY;
 
