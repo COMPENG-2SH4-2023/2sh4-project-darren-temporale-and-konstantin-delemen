@@ -45,22 +45,22 @@ void Player::updatePlayerDir()
             mainGameMechsRef->setExitTrue();
             break;
         case 'w': //if the input is up and the player is not currently going down, set direction to up
-            if(myDir != DOWN){
+            if(myDir != DOWN) {
                 myDir = UP;
             }
             break;
         case 's': //if the input is down and the player is not currently going up, set direction to down
-            if(myDir != UP){
+            if(myDir != UP) {
                 myDir = DOWN;
             }
             break;
         case 'a': //if the input is left and the player is not currently going right, set direction to left
-            if(myDir != RIGHT){
+            if(myDir != RIGHT) {
                 myDir = LEFT;
             }
             break;
         case 'd': //if the input is right and the player is not currently going left, set direction to right
-            if(myDir != LEFT){
+            if(myDir != LEFT) {
                 myDir = RIGHT;
             }
             break;
@@ -112,43 +112,39 @@ void Player::movePlayer(Food *foodObj) // a method that moves the player accordi
 
     objPos updatedHead(X,Y,'*'); // create a new objPos object with the updated coordinates and the symbol '*'
 
-    
-
     objPosArrayList* snakeBody; // declare a pointer to store the snake body list
-    *snakeBody = objPosArrayList(); // initialize the pointer to a new list
     getPlayerPosList(snakeBody); // get the snake body list from the player object
 
-    bool foodColl = false;//initialize a bool to know if there has been a food collision
+    bool foodColl = false; //initialize a bool to know if there has been a food collision
     objPos foodLoc; // declare a variable to store the food position
 
     //check for a collision with each food element
-    for(int i=0;i<(foodObj->getSizeBucket()); i++){
+    for (int i = 0; i < (foodObj->getSizeBucket()); i++) {
         foodObj->getFoodPos(foodLoc, i); // get the food position from the food object
 
-        if(updatedHead.isPosEqual(&foodLoc))//checking for a collision with food
-        {
-            if(foodLoc.getSymbol() == '$'){
+        if (updatedHead.isPosEqual(&foodLoc)) { //checking for a collision with food
+            if (foodLoc.getSymbol() == '$') {
                 //If the collision is with the special food, then increment the score by 5, and reduce the snake size by 1
                 
                 mainGameMechsRef->incrementScore(5); // increment the score in the GameMechs object
 
-                objPosArrayList tempFoodBucket;//A temporaty array list to hold the new food position values
+                objPosArrayList tempFoodBucket; //A temporaty array list to hold the new food position values
                 foodObj->generateFood(&tempFoodBucket, snakeBody, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY()); // generate a new food position that does not overlap with the snake body
                 foodObj->setFoodBucket(&tempFoodBucket);
 
                 playerPosList->insertHead(updatedHead); // insert the updated head position at the head of the list
 
-                if(playerPosList->getSize() != 2){
+                if (playerPosList->getSize() != 2) {
                     playerPosList->removeTail();
                     //only remove the tail twice (make the snake shorter) if the snake is longer than 1 object
                 }
                 playerPosList->removeTail();
                 foodColl = true;
             }
-            else{//If the collision is with a normal food
+            else { //If the collision is with a normal food
                 mainGameMechsRef->incrementScore(); // increment the score in the GameMechs object
 
-                objPosArrayList tempFoodBucket;//A temporaty array list to hold the new food position values
+                objPosArrayList tempFoodBucket; //A temporaty array list to hold the new food position values
                 foodObj->generateFood(&tempFoodBucket, snakeBody, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY()); // generate a new food position that does not overlap with the snake body
                 foodObj->setFoodBucket(&tempFoodBucket);
 
@@ -158,13 +154,13 @@ void Player::movePlayer(Food *foodObj) // a method that moves the player accordi
             }
         }
     }
-    if(!foodColl){ // if there is no collision with food
+    if (!foodColl) { // if there is no collision with food
         playerPosList->insertHead(updatedHead); // insert the updated head position at the head of the list
         playerPosList->removeTail(); // remove the tail position from the list
     }
 
 
-    if(snakeBody->suicideCheck()){ // check if the snake has collided with itself
+    if (snakeBody->suicideCheck()) { // check if the snake has collided with itself
         mainGameMechsRef->setLoseTrue(); // set the lose flag to true in the GameMechs object
         mainGameMechsRef->setExitTrue(); // set the exit flag to true in the GameMechs object
     }

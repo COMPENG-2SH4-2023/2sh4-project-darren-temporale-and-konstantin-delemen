@@ -13,8 +13,8 @@ using namespace std;
  
 #define DELAY_CONST 100000
  
-GameMechs *gameMech; //I am open to better names for this
-Food *food; //I am open to better names for this
+GameMechs *gameMech;
+Food *food;
 Player *player;
  
 void Initialize(void);
@@ -54,19 +54,18 @@ void Initialize(void)
     srand(time(NULL));
  
     //This all gets the elements that the food has to avoid
-    objPos tempPlayerPos(0,0,'s');
+    objPos tempPlayerPos(0, 0, 's');
     player->getPlayerPos(tempPlayerPos);
     int x = gameMech->getBoardSizeX();
     int y = gameMech->getBoardSizeY();
     food = new Food('O', tempPlayerPos, x, y); //then create a new food object using the default symbol O
 
     MacUILib_init();
-    //MacUILib_clearScreen();
 }
  
 void GetInput(void)
 {
-    if(MacUILib_hasChar()){
+    if(MacUILib_hasChar()) {
         gameMech->setInput(MacUILib_getChar());
     }
 }
@@ -84,20 +83,18 @@ void DrawScreen(void)
     objPosArrayList tempFoodList;
     food->getFoodBucketList(&tempFoodList);
     objPosArrayList *snakeBody;
-    *snakeBody = objPosArrayList();
     player->getPlayerPosList(snakeBody);
 
     objPos tempPlayerPos;
     player->getPlayerPos(tempPlayerPos);
  
-    if(!gameMech->getLoseFlagStatus()){
+    if (!gameMech->getLoseFlagStatus()) {
         //If the lose flag is false, print the gameboard
         gameMech->printBoard(tempPlayerPos,snakeBody, &tempFoodList);
         MacUILib_printf("Press W A S D To Move, Eat The Food To Grow\n");
         MacUILib_printf("Score: %d", gameMech->getScore());
-        //Is there other things that should be printed out here?
     }
-    else{
+    else {
         MacUILib_printf("\n   You Died!\n\n   Game Over\n\n");
         MacUILib_printf("   Score: %d\n", gameMech->getScore());
         gameMech->setExitTrue();
@@ -112,8 +109,6 @@ void LoopDelay(void)
  
 void CleanUp(void)
 {
-    //MacUILib_clearScreen(); //Do we need this to still be here?
- 
     delete food;
  
     delete player;

@@ -1,10 +1,5 @@
 #include "objPosArrayList.h"
 
-// Paste your CUTE Tested implementation here.
-// Paste your CUTE Tested implementation here.
-// Paste your CUTE Tested implementation here.
-
-
 objPosArrayList::objPosArrayList() {
     sizeArray = ARRAY_MAX_CAP; // initialize the size of the array to the maximum capacity
     sizeList = 0; // initialize the size of the list to zero
@@ -72,8 +67,8 @@ bool objPosArrayList::suicideCheck(){
 
     //Compare the location of the snake head to the location of each body part, if theu are the same there has been a collision
 
-    for(int i=1; i<sizeList;i++){
-        if(aList[i].x == headLoc.x && aList[i].y == headLoc.y){ //If the randomly generated x and y valuse match the player, repete the do while loop
+    for (int i = 1; i < sizeList;i++) {
+        if (aList[i].x == headLoc.x && aList[i].y == headLoc.y) { //If the randomly generated x and y valuse match the player, repete the do while loop
             return 1;
         }
     }
@@ -81,13 +76,13 @@ bool objPosArrayList::suicideCheck(){
     return 0;
 }
 
-objPosArrayList::objPosArrayList(objPosArrayList &o){
+objPosArrayList::objPosArrayList(objPosArrayList &o) {
     sizeList = o.sizeList;
     sizeArray = o.sizeArray;
 
     aList = new objPos[sizeArray];
 
-    for(int i=0; i<sizeList; i++){
+    for (int i = 0; i<sizeList; i++) {
         aList[i] = o.aList[i];
     }
 }

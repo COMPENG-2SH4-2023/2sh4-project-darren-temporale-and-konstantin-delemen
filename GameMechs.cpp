@@ -2,7 +2,7 @@
 #include "MacUILib.h"
 
 GameMechs::GameMechs(){
-    boardSizeX = 30;//default board sizes
+    boardSizeX = 30; //default board sizes
     boardSizeY = 15;
 
     score = 0;
@@ -32,92 +32,89 @@ GameMechs::GameMechs(GameMechs &o){
     loseFlag = o.loseFlag;
 }
 
-// do you need a destructor?
-
-
-bool GameMechs::getExitFlagStatus(){
+bool GameMechs::getExitFlagStatus() {
     return exitFlag;
 }
 
-bool GameMechs::getLoseFlagStatus(){
+bool GameMechs::getLoseFlagStatus() {
     return loseFlag;
 }
 
-void GameMechs::setExitTrue(){
+void GameMechs::setExitTrue() {
     exitFlag = 1;
 }
 
-void GameMechs::setLoseTrue(){
+void GameMechs::setLoseTrue() {
     loseFlag = 1;
 }
 
-char GameMechs::getInput(){
+char GameMechs::getInput() {
     return input;
 }
 
-void GameMechs::setInput(char this_input){
+void GameMechs::setInput(char this_input) {
     input = this_input;
 }
 
-void GameMechs::clearInput(){
+void GameMechs::clearInput() {
     input = '\0';
 }
 
-int GameMechs::getScore(){
+int GameMechs::getScore() {
     return score;
 }
 
-void GameMechs::incrementScore(){
+void GameMechs::incrementScore() {
     score++;
 }
 
-void GameMechs::incrementScore(int val){
+void GameMechs::incrementScore(int val) {
     score += val;
 }
 
-int GameMechs::getBoardSizeX(){
+int GameMechs::getBoardSizeX() {
     return boardSizeX;
 }
 
-int GameMechs::getBoardSizeY(){
+int GameMechs::getBoardSizeY() {
     return boardSizeY;
 }
 
-void GameMechs::printBoard(objPos &playerLoc, objPosArrayList *snakeLoc, objPosArrayList *foodLoc){
+void GameMechs::printBoard(objPos &playerLoc, objPosArrayList *snakeLoc, objPosArrayList *foodLoc) {
     int i, j, k, objPrinted = 0;
     objPos tempSnakeEle;
     objPos tempFoodPos;
-    for(i = 0; i <= getBoardSizeY(); i++){
-        for(j = 0; j <= getBoardSizeX(); j++){
-            if(i == 0 || i == getBoardSizeY() || j == 0 || j == getBoardSizeX()){
+    for (i = 0; i <= getBoardSizeY(); i++) {
+        for (j = 0; j <= getBoardSizeX(); j++) {
+            if (i == 0 || i == getBoardSizeY() || j == 0 || j == getBoardSizeX()) {
                 //If we are currently at the boarders, print those symbols
-                if(i == 0 || i == getBoardSizeY()){
+                if (i == 0 || i == getBoardSizeY()) {
                     MacUILib_printf("%c", '-');
                 }
-                else{
+                else {
                     MacUILib_printf("%c", '|');
                 }
             }
-            else{
+            else {
                 objPrinted = 0;
-                for(int k=0; k<foodLoc->getSize();k++){//Iterate through each food object position
+                for (int k=0; k < foodLoc->getSize(); k++) { //Iterate through each food object position
                     foodLoc->getElement(tempFoodPos, k);
 
-                    if(i == tempFoodPos.y && j == tempFoodPos.x){
+                    if (i == tempFoodPos.y && j == tempFoodPos.x) {
                         //If we are at the location of the food, print the food
                         MacUILib_printf("%c", tempFoodPos.symbol);
                         objPrinted = 1;
                     }
                 }
-                if(objPrinted==0){//If we havent printed a food object, check if we need to print a part of the snake
-                    for(int k=0;k<(snakeLoc->getSize());k++){
+                if (objPrinted == 0) { //If we havent printed a food object, check if we need to print a part of the snake
+                    for (int k = 0; k < (snakeLoc->getSize()); k++) {
                         snakeLoc->getElement(tempSnakeEle, k);
-                        if(i == tempSnakeEle.y && j == tempSnakeEle.x){
+                        if (i == tempSnakeEle.y && j == tempSnakeEle.x) {
                             objPrinted = 1;
                             MacUILib_printf("%c", tempSnakeEle.symbol);
                         }
                     }
-                    if(objPrinted==0){//if we still havent printed anything, then print a space char
+                    if (objPrinted == 0) { //if we still havent printed anything, then print a space char
                         MacUILib_printf(" ");
                     }
                 }
