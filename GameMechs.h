@@ -49,7 +49,7 @@ class GameMechs
         int getBoardSizeX();
         int getBoardSizeY();
 
-        void printBoard(objPos &playerLoc, objPosArrayList *snakeLoc, objPos foodLoc);
+        void printBoard(objPos &playerLoc, objPosArrayList *snakeLoc, objPosArrayList *foodLoc);
 
 };
 

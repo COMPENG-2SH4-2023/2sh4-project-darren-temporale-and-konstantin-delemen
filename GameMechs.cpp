@@ -79,9 +79,10 @@ int GameMechs::getBoardSizeY(){
     return boardSizeY;
 }
 
-void GameMechs::printBoard(objPos &playerLoc, objPosArrayList *snakeLoc, objPos foodLoc){
+void GameMechs::printBoard(objPos &playerLoc, objPosArrayList *snakeLoc, objPosArrayList *foodLoc){
     int i, j, k, objPrinted = 0;
     objPos tempSnakeEle;
+    objPos tempFoodPos;
     for(i = 0; i <= getBoardSizeY(); i++){
         for(j = 0; j <= getBoardSizeX(); j++){
             if(i == 0 || i == getBoardSizeY() || j == 0 || j == getBoardSizeX()){
@@ -93,21 +94,28 @@ void GameMechs::printBoard(objPos &playerLoc, objPosArrayList *snakeLoc, objPos 
                     MacUILib_printf("%c", '|');
                 }
             }
-            else if(i == foodLoc.y && j == foodLoc.x){
-                //If we are at the location of the food, print the food
-                MacUILib_printf("%c", foodLoc.symbol);
-            }
-            else {
+            else{
                 objPrinted = 0;
-                for(int k=0;k<(snakeLoc->getSize());k++){
-                    snakeLoc->getElement(tempSnakeEle, k);
-                    if(i == tempSnakeEle.y && j == tempSnakeEle.x){
+                for(int k=0; k<foodLoc->getSize();k++){//Iterate through each food object position
+                    foodLoc->getElement(tempFoodPos, k);
+
+                    if(i == tempFoodPos.y && j == tempFoodPos.x){
+                        //If we are at the location of the food, print the food
+                        MacUILib_printf("%c", tempFoodPos.symbol);
                         objPrinted = 1;
-                        MacUILib_printf("%c", tempSnakeEle.symbol);
                     }
                 }
-                if(objPrinted==0){
-                    MacUILib_printf(" ");
+                if(objPrinted==0){//If we havent printed a food object, check if we need to print a part of the snake
+                    for(int k=0;k<(snakeLoc->getSize());k++){
+                        snakeLoc->getElement(tempSnakeEle, k);
+                        if(i == tempSnakeEle.y && j == tempSnakeEle.x){
+                            objPrinted = 1;
+                            MacUILib_printf("%c", tempSnakeEle.symbol);
+                        }
+                    }
+                    if(objPrinted==0){//if we still havent printed anything, then print a space char
+                        MacUILib_printf(" ");
+                    }
                 }
             }
         }

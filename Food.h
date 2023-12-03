@@ -6,7 +6,7 @@
 
 class Food{
     public:
-        objPos foodPos;
+        objPosArrayList foodBucket;
 
         Food();//new food with the default symbol 'O' and position using default game size
         Food(char s, objPos &blockOff, int xRange, int yRange); //new food with specified symbol, playerPos, and game board size
@@ -15,13 +15,17 @@ class Food{
 
         //~foodPos();//there is nothing within foodPos on the heap
 
-        void getFoodPos(objPos &returnPos);
+        //individual food position
+        void getFoodPos(objPos &returnPos, int index);
+        int getSizeBucket();
+        void getFoodBucketList(objPosArrayList* returnBucket);
+        void setFoodBucket(objPosArrayList* setBucket);
 
         //to be used before the snake body grows (only snake head in objPos)
-        void generateInitialFood(objPos &returnPos, objPos &blockOff, int xRange, int yRange);
+        void generateInitialFood(objPosArrayList *returnPos, objPos *blockOff, int xRange, int yRange);
         
         //generating food while avoiding the whole snake body
-        void generateFood(objPos &returnPos, objPosArrayList* blockOff, int xRange, int yRange);
+        void generateFood(objPosArrayList *returnPos, objPosArrayList* blockOff, int xRange, int yRange);
 };
 
 #endif

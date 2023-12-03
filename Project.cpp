@@ -53,12 +53,13 @@ void Initialize(void)
  
     srand(time(NULL));
  
+    //This all gets the elements that the food has to avoid
     objPos tempPlayerPos(0,0,'s');
-    player->getPlayerPos(tempPlayerPos);//This all gets the elements that the food has to avoid
+    player->getPlayerPos(tempPlayerPos);
     int x = gameMech->getBoardSizeX();
     int y = gameMech->getBoardSizeY();
-    food = new Food('O', tempPlayerPos, x, y); //using the default symbol  O
- 
+    food = new Food('O', tempPlayerPos, x, y); //then create a new food object using the default symbol O
+
     MacUILib_init();
     //MacUILib_clearScreen();
 }
@@ -80,8 +81,8 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();
     
-    objPos tempFood;
-    food->getFoodPos(tempFood);
+    objPosArrayList tempFoodList;
+    food->getFoodBucketList(&tempFoodList);
     objPosArrayList *snakeBody = new objPosArrayList();
     player->getPlayerPosList(snakeBody);
 
@@ -90,7 +91,7 @@ void DrawScreen(void)
  
     if(!gameMech->getLoseFlagStatus()){
         //If the lose flag is false, print the gameboard
-        gameMech->printBoard(tempPlayerPos,snakeBody, tempFood);
+        gameMech->printBoard(tempPlayerPos,snakeBody, &tempFoodList);
         MacUILib_printf("Press W A S D To Move, Eat The Food To Grow\n");
         MacUILib_printf("Score: %d", gameMech->getScore());
         //Is there other things that should be printed out here?

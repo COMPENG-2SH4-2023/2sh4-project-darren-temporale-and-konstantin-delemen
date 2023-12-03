@@ -3,27 +3,31 @@
 #include <stdlib.h>
  
 Food::Food(){
-    //Default Symbol = O
-
-    foodPos = objPos(0,0,'O');
+    foodBucket = objPosArrayList();
    
-    objPos tempPlayer(30/2,15/2,'O');
-    generateInitialFood(foodPos,tempPlayer,30,15);//generating positions from the default game size
+    objPos tempPlayer(30/2,15/2,'O');//the starting player position (only at the start of the game)
+    generateInitialFood(&foodBucket,&tempPlayer,30,15);//generating positions from the default game size
 }
  
 Food::Food(char s, objPos &blockOff, int xRange, int yRange){
-    foodPos = objPos(0,0,s);
+    foodBucket = objPosArrayList();
    
-    generateInitialFood(foodPos, blockOff, xRange, yRange);
+    //generate 5 food positions
+    generateInitialFood(&foodBucket, &blockOff, xRange, yRange);
 }
  
 Food::Food(Food &o){
-    foodPos = o.foodPos;
+    foodBucket = o.foodBucket;
 }
 
-void Food::generateInitialFood(objPos &returnPos, objPos &blockOff, int xRange, int yRange){
+void Food::generateInitialFood(objPosArrayList* returnPos, objPos* blockOff, int xRange, int yRange){
     int xtemp, ytemp, match;
-    do{
+    objPos tempObj;
+    tempObj = objPos(0,0,'O');
+
+    //Generate 5 food objects and insert them into the array
+    for(int i=0; i<5; i++){
+        do{
             match = 1;
             xtemp = (rand() % (xRange));//This range is from 0 to range-1
             ytemp = (rand() % (yRange));
@@ -32,21 +36,27 @@ void Food::generateInitialFood(objPos &returnPos, objPos &blockOff, int xRange, 
                 match = 0;
             }
  
-            if(xtemp == blockOff.x && ytemp == blockOff.y){ //If the randomly generated x and y valuse match the player, repete the do while loop
+            if(xtemp == blockOff->x && ytemp == blockOff->y){ //If the randomly generated x and y valuse match the player, repete the do while loop
                 match = 0;
             }
         } while(!match);
  
         //If we have broken out of the do while loop, the temp x and y values dont conflict with anything - so we can use them
-        returnPos.x = xtemp;
-        returnPos.y = ytemp;
+        tempObj.x = xtemp;
+        tempObj.y = ytemp;
+        returnPos->insertHead(tempObj);
+    }
 }
 
-void Food::generateFood(objPos &returnPos, objPosArrayList* blockOff, int xRange, int yRange){
+void Food::generateFood(objPosArrayList* returnPos, objPosArrayList* blockOff, int xRange, int yRange){
     int listSize = blockOff->getSize();
-    objPos listEle;
+    objPos listEle, tempObj;
     int xtemp, ytemp, match;
-    do{
+    tempObj = objPos(0,0,'O');
+
+    //generate 5 random food positions and insert them into the array
+    for(int i=0;i<5;i++){
+        do{
             match = 1;
             xtemp = (rand() % (xRange));//This range is from 0 to range-1
             ytemp = (rand() % (yRange));
@@ -64,10 +74,24 @@ void Food::generateFood(objPos &returnPos, objPosArrayList* blockOff, int xRange
         } while(!match);
  
         //If we have broken out of the do while loop, the temp x and y values dont conflict with anything - so we can use them
-        returnPos.x = xtemp;
-        returnPos.y = ytemp;
+        tempObj.x = xtemp;
+        tempObj.y = ytemp;
+        returnPos->insertHead(tempObj);
+    }
 }
  
-void Food::getFoodPos(objPos &returnPos){
-    returnPos = foodPos;
+void Food::getFoodPos(objPos &returnPos, int index){
+    foodBucket.getElement(returnPos,index);
+}
+
+int Food::getSizeBucket(){
+    return foodBucket.getSize();
+}
+
+void Food::getFoodBucketList(objPosArrayList* returnBucket){
+    *returnBucket = foodBucket;
+}
+
+void Food::setFoodBucket(objPosArrayList* setBucket){
+    foodBucket = *setBucket;
 }

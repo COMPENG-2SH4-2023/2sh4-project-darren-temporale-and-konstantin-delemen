@@ -110,22 +110,34 @@ void Player::movePlayer(Food *foodObj) // a method that moves the player accordi
 
     objPos updatedHead(X,Y,'*'); // create a new objPos object with the updated coordinates and the symbol '*'
 
-    objPos foodLoc; // declare a variable to store the food position
-    foodObj->getFoodPos(foodLoc); // get the food position from the food object
+    
 
     objPosArrayList *snakeBody = new objPosArrayList(); // declare a pointer to store the snake body list
     *snakeBody = objPosArrayList(); // initialize the pointer to a new list
     getPlayerPosList(snakeBody); // get the snake body list from the player object
 
-    if(updatedHead.isPosEqual(&foodLoc))//checking for a collision with food
-    {
-        mainGameMechsRef->incrementScore(); // increment the score in the GameMechs object
+    bool foodColl = false;//initialize a bool to know if there has been a food collision
+    objPos foodLoc; // declare a variable to store the food position
 
-        foodObj->generateFood(foodObj->foodPos, snakeBody, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY()); // generate a new food position that does not overlap with the snake body
+    //check for a collision with each food element
+    for(int i=0;i<(foodObj->getSizeBucket())-1; i++){
+        foodObj->getFoodPos(foodLoc, i); // get the food position from the food object
 
-        playerPosList->insertHead(updatedHead); // insert the updated head position at the head of the list
+        if(updatedHead.isPosEqual(&foodLoc))//checking for a collision with food
+        {
+            mainGameMechsRef->incrementScore(); // increment the score in the GameMechs object
+
+            objPosArrayList tempFoodBucket;
+            foodObj->getFoodBucketList(&tempFoodBucket);
+            foodObj->generateFood(&tempFoodBucket, snakeBody, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY()); // generate a new food position that does not overlap with the snake body
+            foodObj->setFoodBucket(&tempFoodBucket);
+
+            playerPosList->insertHead(updatedHead); // insert the updated head position at the head of the list
+
+            foodColl = true;
+        }
     }
-    else{ // if there is no collision with food
+    if(!foodColl){ // if there is no collision with food
         playerPosList->insertHead(updatedHead); // insert the updated head position at the head of the list
         playerPosList->removeTail(); // remove the tail position from the list
     }
