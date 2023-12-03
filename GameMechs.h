@@ -44,7 +44,8 @@ class GameMechs
         void clearInput();
 
         int getScore();
-        void incrementScore();
+        void incrementScore();//increment the score by 1
+        void incrementScore(int val);//increment the score by val
 
         int getBoardSizeX();
         int getBoardSizeY();

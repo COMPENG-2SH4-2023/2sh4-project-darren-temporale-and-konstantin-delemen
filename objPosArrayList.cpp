@@ -85,6 +85,8 @@ objPosArrayList::objPosArrayList(objPosArrayList &o){
     sizeList = o.sizeList;
     sizeArray = o.sizeArray;
 
+    aList = new objPos[sizeArray];
+
     for(int i=0; i<sizeList; i++){
         aList[i] = o.aList[i];
     }

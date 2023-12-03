@@ -71,6 +71,10 @@ void GameMechs::incrementScore(){
     score++;
 }
 
+void GameMechs::incrementScore(int val){
+    score += val;
+}
+
 int GameMechs::getBoardSizeX(){
     return boardSizeX;
 }

@@ -83,7 +83,8 @@ void DrawScreen(void)
     
     objPosArrayList tempFoodList;
     food->getFoodBucketList(&tempFoodList);
-    objPosArrayList *snakeBody = new objPosArrayList();
+    objPosArrayList *snakeBody;
+    *snakeBody = objPosArrayList();
     player->getPlayerPosList(snakeBody);
 
     objPos tempPlayerPos;
